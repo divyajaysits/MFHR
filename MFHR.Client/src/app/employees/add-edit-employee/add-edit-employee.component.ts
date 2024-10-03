@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Employee, Resp } from '../../dto/dto';
 import { ApiService } from '../../services/api.service';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { NgForm } from '@angular/forms';
+import { faCalendar, faTrash, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-add-edit-employee',
@@ -11,7 +13,15 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class AddEditEmployeeComponent {
 
+  @ViewChild('employeeForm') form!: NgForm;
   SelectedEmployee = new Employee();
+  Departments = [{ id: 1, name: 'HR' }, { id: 2, name: 'SE' }];
+  CivilStatus = [{ id: 1, name: 'Single' }, { id: 2, name: 'Married' }];
+  Titles = [{ id: 1, name: 'Mr' }, { id: 2, name: 'Miss' }, { id: 3, name: 'Mrs' }];
+  disableForm = false;
+  faTrash = faTrash;
+  faPencil = faPencil;
+  faCalendar = faCalendar;
   constructor(
     private apiService: ApiService,
     private toastr: ToastrService,
@@ -22,9 +32,21 @@ export class AddEditEmployeeComponent {
 
 
   async ngOnInit(): Promise<void> {
-    var t = localStorage.getItem("SelectedEmployee");
-    if (t != "") {
+    var t = localStorage.getItem("SelectedEmployeeId");
+    if (t) {   
+      if (t != "") {
+        await this.getByEmployeeId(parseInt(t));
+      }
+    }
+  }
 
+  ngAfterViewInit() {
+    if (this.form && this.form.statusChanges) {
+      this.form.statusChanges.subscribe(() => {
+        if (this.form && this.form.valid != null) {
+          this.disableForm = true;
+        }
+      });
     }
   }
 
@@ -62,6 +84,7 @@ export class AddEditEmployeeComponent {
           this.toastr.success('', data.message, {
             timeOut: 6000, positionClass: "toast-top-right", messageClass: "messagetoast"
           });
+          this.form.reset();
           this.modalRef.hide();
         } else {
           this.toastr.error('', data.message, {
@@ -80,6 +103,7 @@ export class AddEditEmployeeComponent {
           this.toastr.success('', data.message, {
             timeOut: 6000, positionClass: "toast-top-right", messageClass: "messagetoast"
           });
+          this.form.reset();
           this.modalRef.hide();
         } else {
           this.toastr.error('', data.message, {

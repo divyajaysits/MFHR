@@ -8,7 +8,7 @@ export class Employee {
   iD: number = 0;
   isActive: boolean = true;
   titleId: number = 0;
-  civilStatusId: number = 0;
+ 
 
   firstName: string = "";
   lastName: string = "";
@@ -18,11 +18,14 @@ export class Employee {
   nationality: string = "";
   email: string = "";
   mobilePhoneNo: string = "";
+  civilStatusId: number = 0;
+
   addressLine1: string = "";
   addressLine2: string = "";
   city: string = "";
   country: string = "";
 
+  departmentId: number = 0;
   ePFNo: string = "";
   designation: string = "";
   dateJoined: Date = new Date();

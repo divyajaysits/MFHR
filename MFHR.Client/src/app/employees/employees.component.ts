@@ -61,14 +61,13 @@ export class EmployeesComponent {
     );
   }
 
-  onRowClicked(emp:Employee) {
+  editEmployee(emp:Employee) {
     if (emp) {
-      localStorage.setItem("SelectedEmployee", emp.iD.toString()); 
+      localStorage.setItem("SelectedEmployeeId", emp.iD.toString()); 
       this.modalRef = this.modalService.show(AddEditEmployeeComponent, this.modalOptions);
     } else {
       console.log("emp is null");
     }
   }
-
  
 }

@@ -5,8 +5,222 @@
   <div  class="col-12 text-center mt-4">
 
     <div class="mt-2">
+
+      <form #employeeForm="ngForm">
+        <div class="row mb-2">
+          <div class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Title</label>
+            <select [(ngModel)]="SelectedEmployee.titleId" name="titleId" required
+                    #titleId="ngModel" id="titleId" class="form-select form-select-sm form-control-custom">
+              <option *ngFor="let c of Titles" [ngValue]="c.id">{{c.name}}</option>
+            </select>
+            <div *ngIf="titleId.invalid && (titleId.dirty || titleId.touched)">
+              <div *ngIf="titleId.errors?.['required']">
+                <div class="invalid-feedback-red">Title is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>First Name</label>
+            <input [(ngModel)]="SelectedEmployee.firstName" required type="text"
+                   class="form-control form-control-sm form-control-custom" id="firstName" #firstName="ngModel"
+                   name="firstName" onkeypress="return /[A-Za-z\s]/i.test(event.key)">
+            <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)">
+              <div *ngIf="firstName.errors?.['required']">
+                <div class="invalid-feedback-red">First name is required!</div>
+              </div>
+              <div *ngIf="firstName.errors?.['pattern'] ">
+                <div class="invalid-feedback-red">Only alphabetic characters and spaces are allowed in First Name!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Last Name</label>
+            <input [(ngModel)]="SelectedEmployee.lastName" required type="text"
+                   class="form-control form-control-sm form-control-custom" id="lastName" #lastName="ngModel"
+                   name="lastName" onkeypress="return /[A-Za-z\s]/i.test(event.key)">
+            <div *ngIf=" lastName.invalid && (lastName.dirty || lastName.touched)">
+              <div *ngIf="lastName.errors?.['required']">
+                <div class="invalid-feedback-red">Last name is required!</div>
+              </div>
+              <div *ngIf="lastName.errors?.['pattern'] ">
+                <div class="invalid-feedback-red">Only alphabetic characters and spaces are allowed in Last Name!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Date Of Birth</label>
+            <div class="input-group">
+              <input type="text" name="dob" #dob="ngModel" required class="form-control form-control-sm form-control-custom"
+                     [maxDate]="maxDatedobdate" placeholder="YYYY-MM-DD" bsDatepicker #dp="bsDatepicker"
+                     [(ngModel)]="SelectedEmployee.dateofbirth"
+                     [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', returnFocusToInput: true, containerClass: 'theme-blue' }" />
+              <div class="input-group-append">
+                <span class="input-group-text" (click)="dp.show()">
+                  <fa-icon [icon]="faCalendar"></fa-icon>
+                </span>
+              </div>
+            </div>
+            <div *ngIf="dob.invalid && (dob.dirty ||dob.touched)">
+              <div *ngIf="dob.errors?.['required']">
+                <div class="invalid-feedback-red">Date of birth is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Gender</label>
+            <select [(ngModel)]="SelectedEmployee.genderId" name="genderId" required
+                    #genderId="ngModel" id="genderId" class="form-select form-select-sm form-control-custom">
+              <option *ngFor="let c of Genders" [ngValue]="c.id">{{c.name}}</option>
+            </select>
+            <div *ngIf="genderId.invalid && (genderId.dirty || genderId.touched)">
+              <div *ngIf="genderId.errors?.['required']">
+                <div class="invalid-feedback-red">Gender is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>NIC Number</label>
+            <input [(ngModel)]="SelectedEmployee.nIC" [pattern]="pattern" type="text" required
+                   class="form-control form-control-sm form-control-custom" id="nIC" name="nIC" #nIC="ngModel"
+                   onkeypress="return /^[A-Za-z0-9\s]*$/.test(event.key)">
+            <div *ngIf="nIC.dirty || nIC.touched">
+              <div *ngIf="nIC.errors?.['required']">
+                <div class="invalid-feedback-red">NIC number is required!</div>
+              </div>
+              <div *ngIf="nIC.errors?.['pattern']">
+                <div class="invalid-feedback-red">Invalid NIC number!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Nationality</label>
+            <input [(ngModel)]="SelectedEmployee.nationality" type="text" required #nationality="ngModel"
+                   class="form-control form-control-sm form-control-custom" id="nationality" name="nationality">
+            <div *ngIf="nationality.dirty || nationality.touched">
+              <div *ngIf="nationality.errors?.['required']">
+                <div class="invalid-feedback-red">Nationality is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Email Address</label>
+            <input [(ngModel)]="SelectedEmployee.email" required
+                   #email="ngModel" type="text" [pattern]="emailpattern" class="form-control form-control-sm form-control-custom" id="email"
+                   name="email">
+            <div *ngIf=" email.invalid && (email.dirty || email.touched)">
+              <div *ngIf="email.errors?.['required']">
+                <div class="invalid-feedback-red">Email is required!</div>
+              </div>
+              <div *ngIf="email.errors?.['pattern']">
+                <div class="invalid-feedback-red">Invalid email address!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Mobile Number</label>
+            <input [(ngModel)]="SelectedEmployee.mobilePhoneNo" type="text" required #mobilePhoneNo="ngModel"
+                   class="form-control form-control-sm form-control-custom" id="mobilePhoneNo" name="mobilePhoneNo">
+            <div *ngIf="mobilePhoneNo.dirty || mobilePhoneNo.touched">
+              <div *ngIf="mobilePhoneNo.errors?.['required']">
+                <div class="invalid-feedback-red">Mobile Number is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Civil Status</label>
+            <select [(ngModel)]="SelectedEmployee.civilStatusId" name="civilStatusId" id="civilStatusId"
+                    class="form-select form-select-sm form-control-custom" required #civilStatusId="ngModel">
+              <option *ngFor="let c of CivilStatus" [ngValue]="c.id">{{c.name}}</option>
+            </select>
+            <div *ngIf="civilStatusId.dirty || civilStatusId.touched">
+              <div *ngIf="civilStatusId.errors?.['required']">
+                <div class="invalid-feedback-red">Civil status is required!</div>
+              </div>
+            </div>
+          </div>
+
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Address Line 1</label>
+            <input [(ngModel)]="SelectedEmployee.addressLine1" type="text" required #addressLine1="ngModel"
+                   class="form-control form-control-sm form-control-custom" id="addressLine1" name="addressLine1">
+            <div *ngIf="addressLine1.dirty || addressLine1.touched">
+              <div *ngIf="addressLine1.errors?.['required']">
+                <div class="invalid-feedback-red">Address line 1 is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Address Line 2</label>
+            <input [(ngModel)]="SelectedEmployee.addressLine2" type="text" required #addressLine2="ngModel"
+                   class="form-control form-control-sm form-control-custom" id="addressLine2" name="addressLine2">
+            <div *ngIf="addressLine2.dirty || addressLine2.touched">
+              <div *ngIf="addressLine2.errors?.['required']">
+                <div class="invalid-feedback-red">Address line 2  is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>City</label>
+            <input [(ngModel)]="SelectedEmployee.city" type="text" required #city="ngModel"
+                   class="form-control form-control-sm form-control-custom" id="city" name="city">
+            <div *ngIf="city.dirty || city.touched">
+              <div *ngIf="city.errors?.['required']">
+                <div class="invalid-feedback-red">City is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom"><span class="required">* </span>Country</label>
+            <input [(ngModel)]="SelectedEmployee.country" type="text" required #country="ngModel"
+                   class="form-control form-control-sm form-control-custom" id="country" name="country">
+            <div *ngIf="country.dirty || country.touched">
+              <div *ngIf="country.errors?.['required']">
+                <div class="invalid-feedback-red">Country is required!</div>
+              </div>
+            </div>
+          </div>
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom">EPF No</label>
+            <input [(ngModel)]="SelectedEmployee.ePFNo" type="text"
+                   class="form-control form-control-sm form-control-custom" id="ePFNo" name="ePFNo">
+            <div *ngIf="ePFNo.dirty || ePFNo.touched">
+              <div *ngIf="ePFNo.errors?.['required']">
+                <div class="invalid-feedback-red">Civil status is required!</div>
+              </div>
+            </div>
+          </div>
+
+
+          <div  class="col-md-3 col-sm-6 col-xs-12 mt-3">
+            <label class="form-label form-lable-custom">Designation</label>
+            <input [(ngModel)]="SelectedEmployee.designation" type="text"
+                   class="form-control form-control-sm form-control-custom" id="designation" name="designation">
+            <div *ngIf="designation.dirty || designation.touched">
+              <div *ngIf="designation.errors?.['required']">
+                <div class="invalid-feedback-red">Civil status is required!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
       <button type="button" class="btn btn-sm btn-secondary mr-2" (click)="modalRef.hide()">Cancel</button>
-      <button class="btn btn-sm btn-primary text-white" (click)="saveUser()">
+      <button class="btn btn-sm btn-primary text-white" (click)="saveUser()" [disabled]="disableForm">
         <i class="fa fa-save"></i> {{SelectedEmployee.iD > 0 ? 'Update':'Save'}} Changes
       </button>
     </div>
