@@ -10,7 +10,7 @@ import { Resp } from '../dto/dto';
 })
 export class ApiService {
 
-  _baseUrl =  "/";
+  _baseUrl =  "https://localhost:7136/";
 
   constructor(private http: HttpClient, private router: Router) { }
 
