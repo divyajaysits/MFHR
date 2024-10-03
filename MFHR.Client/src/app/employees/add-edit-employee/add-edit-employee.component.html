@@ -1,0 +1,14 @@
+<div class="row agent-pw-reset-form p-4" style="justify-content: center;">
+  <div class="col-12 text-center mt-2">
+    <label for="email" class="modal-title">{{SelectedEmployee.iD > 0 ? 'Update':'Add'}} Employee</label>
+  </div>
+  <div  class="col-12 text-center mt-4">
+
+    <div class="mt-2">
+      <button type="button" class="btn btn-sm btn-secondary mr-2" (click)="modalRef.hide()">Cancel</button>
+      <button class="btn btn-sm btn-primary text-white" (click)="saveUser()">
+        <i class="fa fa-save"></i> {{SelectedEmployee.iD > 0 ? 'Update':'Save'}} Changes
+      </button>
+    </div>
+  </div>
+</div>
